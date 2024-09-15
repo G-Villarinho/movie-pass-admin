@@ -1,0 +1,11 @@
+<nav class="flex items-center p-4">
+    <ng-container *ngIf="(sidebarState$ | async) === false">
+        <button
+            class="hover:bg-gray-200 duration-300 rounded-sm"
+            aria-label="close sidebar menu"
+            (click)="openSidebar()"
+        >
+            <lucide-icon name="align-justify" class="w-7 h-7" />
+        </button>
+    </ng-container>
+</nav>

@@ -1,0 +1,42 @@
+<input
+    type="checkbox"
+    id="drawer-toggle"
+    class="relative sr-only peer"
+    [checked]="sidebarState$ | async"
+/>
+
+<div
+    class="fixed top-0 left-0 w-72 h-full transition-all duration-500 transform -translate-x-full bg-gray-900 shadow-lg peer-checked:translate-x-0"
+>
+    <div class="flex items-center px-3 py-4 text-white">
+        <h2 class="text-2xl font-semibold">Movie Pass admin</h2>
+        <button class="md:hidden ml-auto" (click)="close()">
+            <lucide-icon name="x" class="w-5 h-5" />
+        </button>
+    </div>
+
+    <nav
+        class="flex flex-col gap-1 p-2 text-base font-normal text-blue-gray-700 text-white"
+    >
+        <ng-container *ngIf="sidebarItems$ | async as sidebarItems">
+            <ng-container *ngFor="let sidebarItem of sidebarItems">
+                <a
+                    class="flex items-center mb-1 w-full p-3 group justify-start font-medium hover:bg-white/10 rounded-lg transition duration-150"
+                    [routerLink]="sidebarItem.href"
+                    routerLinkActive="active"
+                >
+                    <div
+                        class="grid mr-4 place-items-center"
+                        [ngClass]="sidebarItem.color"
+                    >
+                        <lucide-icon
+                            [name]="sidebarItem.iconName"
+                            class="w-5 h-5"
+                        />
+                    </div>
+                    {{ sidebarItem.label }}
+                </a>
+            </ng-container>
+        </ng-container>
+    </nav>
+</div>

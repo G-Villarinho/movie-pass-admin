@@ -1,0 +1,47 @@
+<form [formGroup]="signInForm">
+    <div class="space-y-4 mb-2 w-full">
+        <div>
+            <app-auth-input
+                type="email"
+                label="Email"
+                placeholder="john.doe@example.com"
+                [control]="formControl.email"
+            />
+        </div>
+        <div class="">
+            <app-auth-input
+                type="password"
+                label="Password"
+                placeholder="Enter your password"
+                [control]="formControl.password"
+            />
+        </div>
+    </div>
+    <div class="flex items-center justify-between mb-6">
+        <a
+            href="#"
+            class="text-sm text-gray-900 hover:text-gray-900/70 font-medium duration-300"
+            >Forgot your password</a
+        >
+    </div>
+    <ng-container *ngIf="error$ | async as error">
+        <div class="mb-4">
+            <app-form-error [message]="error" />
+        </div>
+    </ng-container>
+
+    <div class="flex items-center flex-col space-y-4">
+        <button
+            type="submit"
+            class="w-full flex justify-center py-2 px-4 border border-transparent bg-gray-900 hover:bg-gray-900/90 duration-300 rounded-md shadow-sm text-sm font-medium text-white"
+            (click)="signIn()"
+        >
+            Sign in
+        </button>
+        <a
+            href="#"
+            class="text-sm text-gray-900 hover:text-gray-900/70 font-medium duration-300"
+            >Don't have a account</a
+        >
+    </div>
+</form>
