@@ -1,0 +1,97 @@
+<p-toast position="top-right"></p-toast>
+<app-header
+    [title]="(title$ | async) ?? 'cinema'"
+    subtitle="Manage your cinemas"
+>
+    <button
+        class="flex items-center gap-2 px-4 py-3 text-white font-semibold bg-gray-800 hover:bg-gray-700 duration-300 rounded-lg"
+        aria-label="create a cinema"
+        (click)="showModal()"
+    >
+        <lucide-icon name="circle-plus" class="w-5 h-5"></lucide-icon>
+        <span class="hidden md:block"> New cinema </span>
+    </button>
+</app-header>
+
+<ng-container *ngIf="cinemas$ | async as paginationData">
+    <div
+        class="relative flex flex-col w-full h-full max-h-screen overflow-y-auto text-gray-700 bg-white shadow-md rounded-xl bg-clip-border"
+    >
+        <table class="w-full text-left table-auto min-w-max">
+            <thead>
+                <tr>
+                    <th
+                        class="p-4 border-b border-blue-gray-100 bg-blue-gray-50"
+                    >
+                        <p
+                            class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70"
+                        >
+                            Name
+                        </p>
+                    </th>
+                    <th
+                        class="p-4 border-b border-blue-gray-100 bg-blue-gray-50 hidden md:table-cell"
+                    >
+                        <p
+                            class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70"
+                        >
+                            Location
+                        </p>
+                    </th>
+                    <th
+                        class="p-4 border-b border-blue-gray-100 bg-blue-gray-50"
+                    >
+                        <p
+                            class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70"
+                        >
+                            Actions
+                        </p>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let cinema of paginationData.rows">
+                    <td class="p-4 border-b border-blue-gray-50">
+                        <p
+                            class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900"
+                        >
+                            {{ cinema.name }}
+                        </p>
+                    </td>
+                    <td
+                        class="p-4 border-b border-blue-gray-50 hidden md:table-cell"
+                    >
+                        <p
+                            class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900"
+                        >
+                            {{ cinema.location }}
+                        </p>
+                    </td>
+                    <td class="p-4 border-b border-blue-gray-50 gap-2">
+                        <button
+                            class="px-2 py-2 text-white font-semibold bg-red-600 hover:bg-red-500 duration-300 rounded-md"
+                            aria-label="delete cinema"
+                            (click)="deleteCinema(cinema.id)"
+                        >
+                            <lucide-icon name="trash" class="w-4 h-4" />
+                        </button>
+                        <button
+                            class="px-2 py-2 ml-1 text-white font-semibold bg-gray-800 hover:bg-gray-700 duration-300 rounded-md"
+                            aria-label="edit cinema"
+                        >
+                            <lucide-icon name="file-pen-line" class="w-4 h-4" />
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="mt-4 flex justify-center">
+        <app-pagination
+            [totalPage]="paginationData.totalPages"
+            [currentPage]="paginationData.page"
+            (pageChange)="onPageChange($event)"
+        />
+    </div>
+</ng-container>

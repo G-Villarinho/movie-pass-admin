@@ -4,6 +4,7 @@ import { provideRouter } from '@angular/router';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { lucideIconsProviders } from '@core/configs/lucide-icons-providers.config';
 import { AuthInterceptor } from '@core/interceptors/auth.interceptors';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 export const appConfig: ApplicationConfig = {
     providers: [
@@ -11,5 +12,6 @@ export const appConfig: ApplicationConfig = {
         provideRouter(routes),
         provideHttpClient(withInterceptors([AuthInterceptor])),
         lucideIconsProviders,
+        provideAnimationsAsync(),
     ],
 };

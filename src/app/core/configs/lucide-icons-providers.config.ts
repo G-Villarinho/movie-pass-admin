@@ -10,10 +10,12 @@ import {
     Clapperboard,
     Cog,
     Copy,
+    FilePenLine,
     Film,
     Inbox,
     LogOut,
     LucideAngularModule,
+    PlusCircle,
     Server,
     Settings,
     Store,
@@ -45,5 +47,7 @@ export const lucideIconsProviders = importProvidersFrom(
         Armchair,
         Settings,
         X,
+        PlusCircle,
+        FilePenLine,
     })
 );

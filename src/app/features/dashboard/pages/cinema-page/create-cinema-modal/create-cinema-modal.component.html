@@ -1,0 +1,40 @@
+<div class="flex flex-col gap-2 space-y-2 mb-6">
+    <div>
+        <app-dashboard-input
+            [label]="'Name'"
+            [type]="'text'"
+            [placeholder]="'Enter new cinema name'"
+            [control]="formControl.name"
+            [errorMessages]="{
+                required: 'Name is required.',
+                maxlength: 'Name must be less than 255 characters.',
+            }"
+        />
+    </div>
+    <div>
+        <app-dashboard-input
+            [label]="'Location'"
+            [type]="'text'"
+            [placeholder]="'Enter new cinema location'"
+            [control]="formControl.location"
+            [errorMessages]="{
+            required: 'Location is required.',
+            maxlength: 'Location must be less than 255 characters.',
+        }"
+        />
+    </div>
+</div>
+<div class="flex justify-between">
+    <button
+        class="px-4 py-2 border border-gray-800 hover:bg-gray-200 duration-300 rounded-lg text-black font-semibold"
+        (click)="close()"
+    >
+        Cancel
+    </button>
+    <button
+        class="px-4 py-2 bg-gray-800 text-white rounded-lg font-semibold hover:bg-gray-700 duration-300"
+        (click)="create()"
+    >
+        Create
+    </button>
+</div>
