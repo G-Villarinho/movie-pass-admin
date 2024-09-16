@@ -1,0 +1,11 @@
+<p-toast position="top-right"></p-toast>
+<app-header title="Movies" subtitle="Manage your Movies">
+    <button
+        class="flex items-center gap-2 px-4 py-3 text-white font-semibold bg-gray-800 hover:bg-gray-700 duration-300 rounded-lg"
+        aria-label="create a cinema"
+        [routerLink]="['new']"
+    >
+        <lucide-icon name="circle-plus" class="w-5 h-5"></lucide-icon>
+        <span class="hidden md:block"> New movie </span>
+    </button>
+</app-header>

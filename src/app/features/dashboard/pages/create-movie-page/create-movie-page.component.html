@@ -1,0 +1,74 @@
+<p-toast position="top-right"></p-toast>
+<app-header title="Create movie" subtitle="Add a New Movie to Your Library">
+</app-header>
+
+<app-image-upload (imagesChange)="onImagesChange($event)" />
+
+<div class="flex flex-row mb-4 mt-4 gap-4">
+    <div>
+        <app-dashboard-input
+            [label]="'Title'"
+            [type]="'text'"
+            [placeholder]="'Enter movie title'"
+            [control]="movieForm.controls.title"
+            [errorMessages]="{
+                required: 'Title is required.',
+                maxlength: 'Name must be less than 255 characters.',
+            }"
+        />
+    </div>
+    <div>
+        <app-dashboard-input
+            [label]="'Duration'"
+            [type]="'number'"
+            [placeholder]="'Enter movie duration'"
+            [control]="movieForm.controls.duration"
+            [errorMessages]="{
+                required: 'Duration is required.',
+                min: 'Duration must be greater than 0.'
+            }"
+        />
+    </div>
+</div>
+
+<ng-container *ngIf="indicativeRatings$ | async as indicativeRatings">
+    <div class="mb-6">
+        <h3 class="mb-4 text-lg font-semibold text-gray-700">
+            Indicative Rating
+        </h3>
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            <ng-container *ngFor="let indicativeRating of indicativeRatings">
+                <label
+                    class="flex flex-col items-center p-4 border rounded-lg cursor-pointer bg-white hover:bg-gray-200 duration-500"
+                    [ngClass]="{
+                        'border-gray-500 bg-blue-50':
+                            movieForm.controls.indicativeRating.value ===
+                            indicativeRating.id
+                    }"
+                >
+                    <input
+                        type="radio"
+                        name="indicativeRating"
+                        [value]="indicativeRating.id"
+                        class="hidden"
+                        [formControl]="movieForm.controls.indicativeRating"
+                    />
+                    <img
+                        [src]="indicativeRating.imageUrl"
+                        [alt]="indicativeRating.description"
+                        class="w-16 h-16 mb-2"
+                    />
+                </label>
+            </ng-container>
+        </div>
+        <div
+            *ngIf="
+                movieForm.controls.indicativeRating.invalid &&
+                movieForm.controls.indicativeRating.touched
+            "
+            class="text-red-500 text-sm mt-2"
+        >
+            Please select an indicative rating.
+        </div>
+    </div>
+</ng-container>

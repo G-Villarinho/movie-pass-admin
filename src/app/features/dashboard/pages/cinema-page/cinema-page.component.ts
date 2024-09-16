@@ -39,7 +39,6 @@ export class CinemaPageComponent {
     private cinemaFacade = inject(CinemaFacade);
 
     protected cinemas$ = this.cinemaFacade.cinemas$;
-
     protected title$: Observable<string> = this.cinemas$.pipe(
         map((paginationData) => `Cinemas (${paginationData?.totalRows ?? 0})`)
     );

@@ -18,4 +18,20 @@ export const dashboardRoutes: Routes = [
                 '@features/dashboard/pages/cinema-page/cinema-page.component'
             ).then((m) => m.CinemaPageComponent),
     },
+    {
+        path: DashBoardRoutesEnum.MOVIE,
+        title: 'Movie Pass - Movie',
+        loadComponent: () =>
+            import(
+                '@features/dashboard/pages/movie-page/movie-page.component'
+            ).then((m) => m.MoviePageComponent),
+    },
+    {
+        path: `${DashBoardRoutesEnum.MOVIE}/new`,
+        title: 'Movie Pass - Movie',
+        loadComponent: () =>
+            import(
+                '@features/dashboard/pages/create-movie-page/create-movie-page.component'
+            ).then((m) => m.CreateMoviePageComponent),
+    },
 ];

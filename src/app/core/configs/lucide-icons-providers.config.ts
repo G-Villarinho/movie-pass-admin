@@ -2,12 +2,12 @@ import {
     AlarmClock,
     AlignJustify,
     Armchair,
-    BadgeHelp,
     ChartLine,
     ChevronsUpDown,
     CirclePlus,
     CircleUser,
     Clapperboard,
+    CloudUpload,
     Cog,
     Copy,
     FilePenLine,
@@ -32,7 +32,6 @@ export const lucideIconsProviders = importProvidersFrom(
         Cog,
         LogOut,
         Inbox,
-        BadgeHelp,
         CirclePlus,
         Store,
         ChevronsUpDown,
@@ -49,5 +48,6 @@ export const lucideIconsProviders = importProvidersFrom(
         X,
         PlusCircle,
         FilePenLine,
+        CloudUpload,
     })
 );

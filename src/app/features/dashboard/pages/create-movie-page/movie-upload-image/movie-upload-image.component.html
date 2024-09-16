@@ -1,0 +1,46 @@
+<div class="flex items-center justify-center w-full">
+    <label
+        for="dropzone-file"
+        class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-200 duration-300"
+        [ngClass]="{ 'cursor-not-allowed opacity-50': images.length >= 3 }"
+    >
+        <div class="flex flex-col items-center justify-center pt-5 pb-6">
+            <lucide-icon name="cloud-upload" class="w-12 h-12 text-gray-500" />
+            <p class="mb-2 text-sm text-gray-500">
+                <span class="font-semibold">Click to upload</span> or drag and
+                drop
+            </p>
+            <p class="text-xs text-gray-500">
+                PNG, JPG or JPEG (MAX. 1080x1600 pixels, 5MB)
+            </p>
+        </div>
+        <input
+            id="dropzone-file"
+            type="file"
+            class="hidden"
+            (change)="onImageChange($event)"
+            [disabled]="images.length >= 3"
+            multiple
+            accept="image/png, image/jpeg, image/jpg"
+        />
+    </label>
+</div>
+
+<!-- Preview das imagens -->
+<div class="flex flex-wrap mt-4 gap-4">
+    <div class="relative" *ngFor="let preview of imagePreviews; let i = index">
+        <!-- Imagem -->
+        <img
+            [src]="preview"
+            alt="Image Preview"
+            class="w-32 h-32 object-cover rounded-lg"
+        />
+        <!-- Ícone de lixeira -->
+        <button
+            (click)="removeImage(i)"
+            class="absolute top-1 right-1 bg-red-600 rounded-lg p-1 shadow hover:bg-red-500 duration-300"
+        >
+            <lucide-icon name="trash" class="w-4 h-4 text-white"></lucide-icon>
+        </button>
+    </div>
+</div>

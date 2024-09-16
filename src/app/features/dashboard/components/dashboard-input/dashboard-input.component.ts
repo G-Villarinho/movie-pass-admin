@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, input } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
-type Type = 'text' | 'password' | 'email';
+type Type = 'text' | 'password' | 'email' | 'number';
 
 @Component({
     selector: 'app-dashboard-input',
