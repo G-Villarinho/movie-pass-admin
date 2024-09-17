@@ -44,17 +44,54 @@ export class CreateMoviePageComponent {
     });
 
     onImagesChange(images: File[]) {
-        // Manipular as imagens selecionadas
+        this.images = images;
     }
-    removeImage(index: number) {
-        this.images.splice(index, 1);
-        this.imagePreviews.splice(index, 1);
+
+    onSubmit() {
+        if (this.movieForm.invalid) {
+            this.showWarningToast('Please fill in all required fields.');
+            return;
+        }
+
+        const { title, duration, indicativeRating } = this.movieForm.value;
+
+        if (!title || !duration || !indicativeRating) {
+            this.showWarningToast('Please fill in all required fields.');
+            return;
+        }
+
+        const moviePayload = {
+            title: title,
+            duration: duration,
+            indicativeRatingId: indicativeRating,
+        };
+
+        this.movieService.createMovie(moviePayload, this.images).subscribe({
+            next: () => {
+                this.showSuccessToast('Movie created successfully.');
+                this.movieForm.reset();
+                this.images = [];
+            },
+            error: (err) => {
+                this.showWarningToast(
+                    'Failed to create movie. Please try again.'
+                );
+            },
+        });
     }
 
     private showWarningToast(message: string) {
         this.messageService.add({
             severity: 'warn',
             summary: 'Warning',
+            detail: message,
+        });
+    }
+
+    private showSuccessToast(message: string) {
+        this.messageService.add({
+            severity: 'success',
+            summary: 'Success',
             detail: message,
         });
     }

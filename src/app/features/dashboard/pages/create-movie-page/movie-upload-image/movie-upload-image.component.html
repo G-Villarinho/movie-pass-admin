@@ -26,21 +26,25 @@
     </label>
 </div>
 
-<!-- Preview das imagens -->
 <div class="flex flex-wrap mt-4 gap-4">
-    <div class="relative" *ngFor="let preview of imagePreviews; let i = index">
-        <!-- Imagem -->
+    <div
+        *ngFor="let preview of imagePreviews; let i = index"
+        class="relative transition-opacity duration-500 ease-in-out opacity-0"
+        [ngClass]="{ 'opacity-100': images.length > i }"
+    >
         <img
             [src]="preview"
             alt="Image Preview"
             class="w-32 h-32 object-cover rounded-lg"
         />
-        <!-- Ícone de lixeira -->
         <button
             (click)="removeImage(i)"
-            class="absolute top-1 right-1 bg-red-600 rounded-lg p-1 shadow hover:bg-red-500 duration-300"
+            class="absolute top-1 right-1 bg-white rounded-full p-1 shadow hover:bg-gray-100"
         >
-            <lucide-icon name="trash" class="w-4 h-4 text-white"></lucide-icon>
+            <lucide-icon
+                name="trash"
+                class="w-4 h-4 text-red-500"
+            ></lucide-icon>
         </button>
     </div>
 </div>

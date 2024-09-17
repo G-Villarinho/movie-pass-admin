@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, inject, output, Output } from '@angular/core';
 import { LucideAngularModule } from 'lucide-angular';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
@@ -14,32 +14,35 @@ import { ToastModule } from 'primeng/toast';
 })
 export class MovieImageUploadComponent {
     @Output() imagesChange = new EventEmitter<File[]>();
-    imagePreviews: string[] = [];
-    images: File[] = [];
 
-    constructor(private messageService: MessageService) {}
+    private messageService = inject(MessageService);
+
+    protected imagePreviews: string[] = [];
+    protected images: File[] = [];
 
     onImageChange(event: Event) {
         const target = event.target as HTMLInputElement;
         const files = target.files;
 
-        if (files && files.length > 0) {
-            if (this.images.length + files.length <= 3) {
-                for (let i = 0; i < files.length; i++) {
-                    const file = files[i];
-                    this.images.push(file);
+        if (!(files && files.length > 0)) {
+            return;
+        }
 
-                    const reader = new FileReader();
-                    reader.onload = (e: ProgressEvent<FileReader>) => {
-                        const result = e.target?.result as string;
-                        this.imagePreviews.push(result);
-                    };
-                    reader.readAsDataURL(file);
-                }
-                this.imagesChange.emit(this.images);
-            } else {
-                this.showWarningToast('You can only upload up to 3 images.');
+        if (this.images.length + files.length <= 3) {
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                this.images.push(file);
+
+                const reader = new FileReader();
+                reader.onload = (e: ProgressEvent<FileReader>) => {
+                    const result = e.target?.result as string;
+                    this.imagePreviews.push(result);
+                };
+                reader.readAsDataURL(file);
             }
+            this.imagesChange.emit(this.images);
+        } else {
+            this.showWarningToast('You can only upload up to 3 images.');
         }
     }
 
