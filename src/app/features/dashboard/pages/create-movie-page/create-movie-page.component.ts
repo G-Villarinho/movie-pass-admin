@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import {
+    FormsModule,
     NonNullableFormBuilder,
     ReactiveFormsModule,
     Validators,
@@ -12,6 +13,11 @@ import { LucideAngularModule } from 'lucide-angular';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { MovieImageUploadComponent } from './movie-upload-image/movie-upload-image.component';
+import { Router } from '@angular/router';
+import { DashBoardRoutesEnum } from '@shared/enums/routes/dashboard-routes.enum';
+import { SliderModule } from 'primeng/slider';
+import { DropdownModule } from 'primeng/dropdown';
+import { NotificationService } from '@shared/service/notification.service';
 
 @Component({
     selector: 'app-create-movie-page',
@@ -24,6 +30,9 @@ import { MovieImageUploadComponent } from './movie-upload-image/movie-upload-ima
         ToastModule,
         ReactiveFormsModule,
         MovieImageUploadComponent,
+        SliderModule,
+        FormsModule,
+        DropdownModule,
     ],
     templateUrl: './create-movie-page.component.html',
     styleUrl: './create-movie-page.component.scss',
@@ -32,7 +41,8 @@ import { MovieImageUploadComponent } from './movie-upload-image/movie-upload-ima
 export class CreateMoviePageComponent {
     private movieService = inject(MovieService);
     private formBuilder = inject(NonNullableFormBuilder);
-    private messageService = inject(MessageService);
+    private notificationService = inject(NotificationService);
+    private router = inject(Router);
 
     protected indicativeRatings$ = this.movieService.getAllIndicativeRatings();
     protected imagePreviews: string[] = [];
@@ -47,16 +57,24 @@ export class CreateMoviePageComponent {
         this.images = images;
     }
 
+    onSliderChange(event: any) {
+        this.movieForm.controls.duration.setValue(event.value);
+    }
+
     onSubmit() {
         if (this.movieForm.invalid) {
-            this.showWarningToast('Please fill in all required fields.');
+            this.notificationService.showWarning(
+                'Please fill in all required fields.'
+            );
             return;
         }
 
-        const { title, duration, indicativeRating } = this.movieForm.value;
+        const { title, duration, indicativeRating } = this.movieForm.value!;
 
         if (!title || !duration || !indicativeRating) {
-            this.showWarningToast('Please fill in all required fields.');
+            this.notificationService.showWarning(
+                'Please fill in all required fields.'
+            );
             return;
         }
 
@@ -68,31 +86,19 @@ export class CreateMoviePageComponent {
 
         this.movieService.createMovie(moviePayload, this.images).subscribe({
             next: () => {
-                this.showSuccessToast('Movie created successfully.');
+                this.notificationService.showSuccess(
+                    'Movie created successfully.'
+                );
+                this.notificationService.showInfo(
+                    'Image(s) are loading in the background'
+                );
                 this.movieForm.reset();
                 this.images = [];
+                this.router.navigate([
+                    DashBoardRoutesEnum.PATH,
+                    DashBoardRoutesEnum.MOVIE,
+                ]);
             },
-            error: (err) => {
-                this.showWarningToast(
-                    'Failed to create movie. Please try again.'
-                );
-            },
-        });
-    }
-
-    private showWarningToast(message: string) {
-        this.messageService.add({
-            severity: 'warn',
-            summary: 'Warning',
-            detail: message,
-        });
-    }
-
-    private showSuccessToast(message: string) {
-        this.messageService.add({
-            severity: 'success',
-            summary: 'Success',
-            detail: message,
         });
     }
 }

@@ -1,13 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { Component, input } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { SuffixDirective } from '@core/directives/suffix.directive';
 
 type Type = 'text' | 'password' | 'email' | 'number';
 
 @Component({
     selector: 'app-dashboard-input',
     standalone: true,
-    imports: [ReactiveFormsModule, CommonModule],
+    imports: [ReactiveFormsModule, CommonModule, SuffixDirective], // Adicione a diretiva aqui
     template: `
         <div class="flex flex-col gap-2">
             <label

@@ -1,4 +1,3 @@
-<p-toast position="top-right"></p-toast>
 <app-header
     [title]="(title$ | async) ?? 'cinema'"
     subtitle="Manage your cinemas"
@@ -6,7 +5,7 @@
     <button
         class="flex items-center gap-2 px-4 py-3 text-white font-semibold bg-gray-800 hover:bg-gray-700 duration-300 rounded-lg"
         aria-label="create a cinema"
-        (click)="showModal()"
+        (click)="showCreateModal()"
     >
         <lucide-icon name="circle-plus" class="w-5 h-5" />
         <span class="hidden md:block"> New cinema </span>
@@ -71,7 +70,7 @@
                         <button
                             class="px-2 py-2 text-white font-semibold bg-red-600 hover:bg-red-500 duration-300 rounded-md"
                             aria-label="delete cinema"
-                            (click)="deleteCinema(cinema.id)"
+                            (click)="showDeleteModal(cinema.id)"
                         >
                             <lucide-icon name="trash" class="w-4 h-4" />
                         </button>
