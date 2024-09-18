@@ -1,4 +1,9 @@
-<div class="flex items-center justify-center w-full">
+<div
+    class="flex items-center justify-center w-full"
+    (dragover)="onDragOver($event)"
+    (dragleave)="onDragLeave($event)"
+    (drop)="onDrop($event)"
+>
     <label
         for="dropzone-file"
         class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-200 duration-300"
@@ -26,25 +31,30 @@
     </label>
 </div>
 
-<div class="flex flex-wrap mt-4 gap-4">
+<div class="flex flex-wrap items-center justify-center my-4 gap-4">
     <div
         *ngFor="let preview of imagePreviews; let i = index"
-        class="relative transition-opacity duration-500 ease-in-out opacity-0"
-        [ngClass]="{ 'opacity-100': images.length > i }"
+        class="flex items-center border-4 rounded-lg p-2 w-80 relative"
     >
-        <img
-            [src]="preview"
-            alt="Image Preview"
-            class="w-32 h-32 object-cover rounded-lg"
-        />
+        <div
+            class="w-20 h-20 flex-shrink-0 border rounded-lg overflow-hidden bg-gray-100 flex items-center justify-center"
+        >
+            <img
+                [src]="preview"
+                alt="Image Preview of poster"
+                class="w-full h-full object-cover"
+                loading="lazy"
+            />
+        </div>
+        <div class="ml-12 flex-grow">
+            <h4 class="text-xl font-semibold">Poster {{ i + 1 }}</h4>
+        </div>
+
         <button
             (click)="removeImage(i)"
-            class="absolute top-1 right-1 bg-white rounded-full p-1 shadow hover:bg-gray-100"
+            class="absolute top-1 right-1 bg-red-600 rounded-full p-1 shadow hover:bg-red-500 duration-300"
         >
-            <lucide-icon
-                name="trash"
-                class="w-4 h-4 text-red-500"
-            ></lucide-icon>
+            <lucide-icon name="x" class="w-4 h-4 text-white" />
         </button>
     </div>
 </div>

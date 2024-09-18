@@ -6,6 +6,7 @@ import { lucideIconsProviders } from '@core/configs/lucide-icons-providers.confi
 import { AuthInterceptor } from '@core/interceptors/auth.interceptor';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { HttpErrorInterceptor } from '@core/interceptors/http-error.interceptor';
+import { MessageService } from 'primeng/api';
 
 export const appConfig: ApplicationConfig = {
     providers: [
@@ -16,5 +17,6 @@ export const appConfig: ApplicationConfig = {
         ),
         lucideIconsProviders,
         provideAnimationsAsync(),
+        MessageService,
     ],
 };

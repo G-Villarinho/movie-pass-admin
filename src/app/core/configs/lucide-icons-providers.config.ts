@@ -20,6 +20,7 @@ import {
     Settings,
     Store,
     Trash,
+    Trash2,
     TriangleAlert,
     X,
 } from 'lucide-angular';
@@ -49,5 +50,6 @@ export const lucideIconsProviders = importProvidersFrom(
         PlusCircle,
         FilePenLine,
         CloudUpload,
+        Trash2,
     })
 );

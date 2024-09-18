@@ -1,21 +1,23 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { MessageService, PrimeNGConfig } from 'primeng/api';
+import { NotificationService } from '@shared/service/notification.service';
+import { PrimeNGConfig } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 
 @Component({
     selector: 'app-root',
     standalone: true,
     imports: [RouterOutlet, ToastModule],
-    template: `<router-outlet />`,
+    template: `<p-toast position="top-right" /> <router-outlet />`,
     styles: [],
-    providers: [MessageService],
 })
 export class AppComponent implements OnInit {
     private primengConfig = inject(PrimeNGConfig);
+    private notificationService = inject(NotificationService);
 
     ngOnInit(): void {
         this.configurePrimeNG();
+        this.notificationService.showSuccess('dsadsadsadsa');
     }
 
     private configurePrimeNG() {

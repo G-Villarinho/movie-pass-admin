@@ -11,19 +11,15 @@ import { MessageService } from 'primeng/api';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ToastModule } from 'primeng/toast';
 import { CinemaFacade } from '../cinema.facade';
+import { NotificationService } from '@shared/service/notification.service';
 
 const MAX_LENGTH = 255;
 
 @Component({
     selector: 'app-create-cinema-modal',
     standalone: true,
-    imports: [
-        CommonModule,
-        ReactiveFormsModule,
-        DashboardInputComponent,
-        ToastModule,
-    ],
-    providers: [MessageService, CinemaFacade],
+    imports: [CommonModule, ReactiveFormsModule, DashboardInputComponent],
+    providers: [CinemaFacade],
     templateUrl: './create-cinema-modal.component.html',
     styleUrl: './create-cinema-modal.component.scss',
 })
@@ -31,6 +27,7 @@ export class CreateCinemaModalComponent {
     private formBuilder = inject(NonNullableFormBuilder);
     private ref = inject(DynamicDialogRef);
     private cinemaFacade = inject(CinemaFacade);
+    private notificationService = inject(NotificationService);
 
     protected cinemaForm = this.formBuilder.group({
         name: ['', [Validators.required, Validators.maxLength(MAX_LENGTH)]],
@@ -50,12 +47,15 @@ export class CreateCinemaModalComponent {
         const cinema = this.cinemaForm.value as CinemaPayload;
         this.cinemaFacade.createCinema(cinema).subscribe({
             next: () => {
-                this.ref.close({ success: true });
+                this.notificationService.showSuccess(
+                    'Successfully created cinema.'
+                );
+                this.ref.close();
             },
         });
     }
 
     close() {
-        this.ref.close({ success: false });
+        this.ref.close();
     }
 }
