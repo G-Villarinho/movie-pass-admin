@@ -94,10 +94,16 @@
         </div>
     </div>
 </div>
-<div class="w-full flex">
+<div class="w-full flex justify-between">
+    <button
+        (click)="goBack()"
+        class="sm:mt-44 border-2 border-gray-800 hover:bg-gray-200 duration-300 text-black font-semibold py-2 px-16 rounded"
+    >
+        Go Back
+    </button>
     <button
         (click)="onSubmit()"
-        class="sm:mt-44 ml-auto bg-gray-800 hover:bg-gray-700 duration-300 text-white font-semibold py-2 px-12 rounded"
+        class="sm:mt-44 bg-gray-800 hover:bg-gray-700 duration-300 text-white font-semibold py-2 px-16 rounded"
     >
         Create
     </button>

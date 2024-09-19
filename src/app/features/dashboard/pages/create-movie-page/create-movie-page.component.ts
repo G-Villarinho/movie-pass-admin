@@ -53,15 +53,15 @@ export class CreateMoviePageComponent {
         indicativeRating: [null, [Validators.required]],
     });
 
-    onImagesChange(images: File[]) {
+    protected onImagesChange(images: File[]) {
         this.images = images;
     }
 
-    onSliderChange(event: any) {
+    protected onSliderChange(event: any) {
         this.movieForm.controls.duration.setValue(event.value);
     }
 
-    onSubmit() {
+    protected onSubmit() {
         if (this.movieForm.invalid) {
             this.notificationService.showWarning(
                 'Please fill in all required fields.'
@@ -94,11 +94,17 @@ export class CreateMoviePageComponent {
                 );
                 this.movieForm.reset();
                 this.images = [];
-                this.router.navigate([
-                    DashBoardRoutesEnum.PATH,
-                    DashBoardRoutesEnum.MOVIE,
-                ]);
+                this.navigateToMovie();
             },
         });
+    }
+
+    protected goBack() {
+        this.navigateToMovie();
+    }
+
+    private navigateToMovie() {
+        const url = [DashBoardRoutesEnum.PATH, DashBoardRoutesEnum.MOVIE];
+        this.router.navigate(url);
     }
 }
