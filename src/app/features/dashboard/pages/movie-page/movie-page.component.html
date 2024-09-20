@@ -9,3 +9,158 @@
         <span class="hidden md:block"> New movie </span>
     </button>
 </app-header>
+
+<ng-container *ngIf="moviesPaginate$ | async as paginationData">
+    <div
+        class="relative flex flex-col w-full h-full max-h-screen overflow-y-auto text-gray-700 bg-white shadow-md rounded-xl bg-clip-border"
+    >
+        <table class="w-full text-left table-auto min-w-max">
+            <thead>
+                <tr>
+                    <th
+                        class="p-4 border-b border-blue-gray-100 bg-blue-gray-50 hidden md:table-cell"
+                    >
+                        <p
+                            class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70"
+                        >
+                            Poster Default
+                        </p>
+                    </th>
+                    <th
+                        class="p-4 border-b border-blue-gray-100 bg-blue-gray-50"
+                    >
+                        <p
+                            class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70"
+                        >
+                            Title
+                        </p>
+                    </th>
+                    <th
+                        class="p-4 border-b border-blue-gray-100 bg-blue-gray-50 hidden sm:table-cell"
+                    >
+                        <p
+                            class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70"
+                        >
+                            Indicative rating
+                        </p>
+                    </th>
+                    <th
+                        class="p-4 border-b border-blue-gray-100 bg-blue-gray-50 hidden md:table-cell"
+                    >
+                        <p
+                            class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70"
+                        >
+                            Duration
+                        </p>
+                    </th>
+                    <th
+                        class="p-4 border-b border-blue-gray-100 bg-blue-gray-50"
+                    >
+                        <p
+                            class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70"
+                        >
+                            Actions
+                        </p>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let movie of paginationData.rows">
+                    <td
+                        class="p-4 border-b border-blue-gray-50 hidden md:table-cell"
+                    >
+                        <div
+                            class="w-20 h-20 border rounded-lg overflow-hidden"
+                        >
+                            <img
+                                [src]="movie.movieImages[0].imageUrl"
+                                alt="Movie Poster"
+                                class="object-cover w-full h-full"
+                                loading="lazy"
+                            />
+                        </div>
+                    </td>
+                    <td class="p-4 border-b border-blue-gray-50">
+                        <p
+                            class="block font-sans text-sm antialiased leading-normal text-blue-gray-900 font-semibold"
+                        >
+                            {{ movie.title }}
+                        </p>
+                    </td>
+                    <td
+                        class="p-4 border-b border-blue-gray-50 hidden sm:table-cell"
+                    >
+                        <p
+                            class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900"
+                        >
+                            <img
+                                [src]="movie.indicativeRating.imageUrl"
+                                [alt]="
+                                    'Indicative rating' +
+                                    movie.indicativeRating.description
+                                "
+                                class="w-8 h-8"
+                                loading="lazy"
+                            />
+                        </p>
+                    </td>
+                    <td
+                        class="p-4 border-b border-blue-gray-50 hidden md:table-cell"
+                    >
+                        <p
+                            class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900"
+                        >
+                            {{ movie.duration }} Minutes
+                        </p>
+                    </td>
+                    <td class="p-4 border-b border-blue-gray-50 gap-2 relative">
+                        <button
+                            class="px-2 py-2 text-gray-500 font-semibold duration-300 rounded-md"
+                            aria-label="action menu"
+                            (click)="toggleDropdown(movie.id)"
+                        >
+                            <lucide-icon name="ellipsis" class="w-6 h-6" />
+                        </button>
+                        <div
+                            *ngIf="selectedMovieId === movie.id"
+                            class="absolute ml-2 mt-1 w-36 bg-white border border-gray-300 rounded-lg shadow-lg z-50"
+                        >
+                            <ul class="py-1">
+                                <li>
+                                    <button
+                                        class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
+                                    >
+                                        Update Images
+                                    </button>
+                                </li>
+                                <li>
+                                    <button
+                                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
+                                    >
+                                        Update Data
+                                    </button>
+                                </li>
+                                <li>
+                                    <button
+                                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-red-100 w-full text-left"
+                                        (click)="showDeleteModal(movie.id)"
+                                    >
+                                        Delete
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="mt-4 flex justify-center">
+        <app-pagination
+            [totalPage]="paginationData.totalPages"
+            [currentPage]="paginationData.page"
+            (pageChange)="onPageChange($event)"
+        />
+    </div>
+</ng-container>

@@ -7,9 +7,8 @@ import { Cinema } from '@features/dashboard/models/cinema';
     providedIn: 'root',
 })
 export class CinemaStore {
-    private cinemasSubject = new BehaviorSubject<Pagination<Cinema> | null>(
-        null
-    );
+    private cinemasPaginateSubject =
+        new BehaviorSubject<Pagination<Cinema> | null>(null);
     private paginationStateSubject = new BehaviorSubject<{
         page: number;
         limit: number;
@@ -20,7 +19,7 @@ export class CinemaStore {
         sort: '',
     });
 
-    public cinemas$ = this.cinemasSubject.asObservable();
+    public cinemasPaginate$ = this.cinemasPaginateSubject.asObservable();
     public paginationState$ = this.paginationStateSubject.asObservable();
 
     setPaginationState(page: number, limit: number, sort?: string): void {
@@ -28,7 +27,7 @@ export class CinemaStore {
     }
 
     setCinemas(paginationData: Pagination<Cinema>): void {
-        this.cinemasSubject.next(paginationData);
+        this.cinemasPaginateSubject.next(paginationData);
     }
 
     getCurrentPaginationState() {

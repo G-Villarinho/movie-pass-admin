@@ -12,7 +12,7 @@
     </button>
 </app-header>
 
-<ng-container *ngIf="cinemas$ | async as paginationData">
+<ng-container *ngIf="cinemasPaginate$ | async as paginationData">
     <div
         class="relative flex flex-col w-full h-full max-h-screen overflow-y-auto text-gray-700 bg-white shadow-md rounded-xl bg-clip-border"
     >

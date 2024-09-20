@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { CinemaPayload } from '../models/payloads/cinema.payload';
+import { CinemaPayload } from '@features/dashboard/models/payloads/cinema.payload';
 import { Observable, take } from 'rxjs';
 import { environment } from '@environments/environment.development';
 import { Pagination } from '@core/models/pagination';
@@ -17,7 +17,7 @@ export class CinemaService {
         return this.http.post<Cinema>(this.apiUrl, { name, location });
     }
 
-    fetchCinemas(
+    fetchCinemasPaginates(
         page: number,
         limit: number,
         sort?: string

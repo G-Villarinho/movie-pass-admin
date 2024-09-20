@@ -34,8 +34,8 @@ export class CinemaPageComponent {
     private ref: DynamicDialogRef | undefined;
     private cinemaFacade = inject(CinemaFacade);
 
-    protected cinemas$ = this.cinemaFacade.cinemas$;
-    protected title$: Observable<string> = this.cinemas$.pipe(
+    protected cinemasPaginate$ = this.cinemaFacade.cinemasPaginate$;
+    protected title$: Observable<string> = this.cinemasPaginate$.pipe(
         map((paginationData) => `Cinemas (${paginationData?.totalRows ?? 0})`)
     );
 

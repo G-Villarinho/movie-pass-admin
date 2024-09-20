@@ -1,4 +1,5 @@
 import { inject, Injectable, OnDestroy } from '@angular/core';
+import { PaginatePayload } from '@core/models/payloads/paginate.payload';
 import { CinemaPayload } from '@features/dashboard/models/payloads/cinema.payload';
 import { CinemaService } from '@features/dashboard/services/cinema.service';
 import { CinemaStore } from '@features/dashboard/store/cinema.store';
@@ -13,7 +14,7 @@ export class CinemaFacade implements OnDestroy {
     private cinemaService = inject(CinemaService);
     private destroy$ = new Subject<void>();
 
-    cinemas$ = this.cinemaStore.cinemas$;
+    cinemasPaginate$ = this.cinemaStore.cinemasPaginate$;
     paginationState$ = this.cinemaStore.paginationState$;
 
     constructor() {
@@ -29,8 +30,8 @@ export class CinemaFacade implements OnDestroy {
         this.paginationState$
             .pipe(
                 takeUntil(this.destroy$),
-                switchMap(({ page, limit, sort }) =>
-                    this.cinemaService.fetchCinemas(page, limit, sort)
+                switchMap(({ page, limit, sort }: PaginatePayload) =>
+                    this.cinemaService.fetchCinemasPaginates(page, limit, sort)
                 )
             )
             .subscribe((data) => {

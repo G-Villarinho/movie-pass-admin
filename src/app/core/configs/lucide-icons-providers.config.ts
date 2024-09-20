@@ -10,8 +10,11 @@ import {
     CloudUpload,
     Cog,
     Copy,
+    Ellipsis,
     FilePenLine,
+    FileText,
     Film,
+    Image,
     Inbox,
     LogOut,
     LucideAngularModule,
@@ -51,5 +54,8 @@ export const lucideIconsProviders = importProvidersFrom(
         FilePenLine,
         CloudUpload,
         Trash2,
+        Ellipsis,
+        Image,
+        FileText,
     })
 );

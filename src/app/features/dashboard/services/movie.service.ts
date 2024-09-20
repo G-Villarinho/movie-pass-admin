@@ -1,10 +1,11 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { EMPTY, Observable } from 'rxjs';
+import { EMPTY, Observable, take } from 'rxjs';
 import { IndicativeRating } from '@features/dashboard/models/indicativeRating';
 import { environment } from '@environments/environment.development';
 import { MoviePayload } from '@features/dashboard/models/payloads/movie.payload';
-import { Movie } from '../models/movie';
+import { Movie } from '@features/dashboard/models/movie';
+import { Pagination } from '@core/models/pagination';
 
 @Injectable({
     providedIn: 'root',
@@ -32,5 +33,26 @@ export class MovieService {
         });
 
         return this.http.post<Movie>(`${this.adminApiUrl}`, formData);
+    }
+
+    fetchPaginateMovies(
+        page: number,
+        limit: number,
+        sort?: string
+    ): Observable<Pagination<Movie>> {
+        const params = new HttpParams()
+            .set('page', page.toString())
+            .set('limit', limit.toString())
+            .set('sort', sort || '');
+
+        return this.http
+            .get<Pagination<Movie>>(this.adminApiUrl, { params })
+            .pipe(take(1));
+    }
+
+    deleteMovie(id: string): Observable<null> {
+        return this.http
+            .delete<null>(`${this.adminApiUrl}/${id}`)
+            .pipe(take(1));
     }
 }
